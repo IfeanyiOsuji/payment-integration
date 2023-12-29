@@ -24,19 +24,19 @@ import com.ify.test.integration.dto.PaymentResponse;
 @Service
 public class FlutterwavePaymentService implements PaymentService {
 
-    @Value("${fluterwave.public-key}")
+    @Value("${flutterwave.public-key}")
     private String publicKey;
     @Value("${flutterwave.secret-key}")
-    private String privateKey = "FLWSECK_TEST-7c565cc3b057f3eb4e2680038d9adb55-X";
+    private String privateKey;// = "FLWSECK_TEST-7c565cc3b057f3eb4e2680038d9adb55-X";
 
     //@Autowired
     private final RestTemplate restTemplate;
      
+        @Value("${flutterwave.apiurl}")
+        String aprurl;// = "https://api.flutterwave.com/v3";
 
-        String aprurl = "https://api.flutterwave.com/v3";
-
-    public FlutterwavePaymentService(final RestTemplate restTemplate){
-        this.restTemplate  = restTemplate;
+    public FlutterwavePaymentService(){
+        this.restTemplate  = new RestTemplate();
     }
 
     public PaymentResponse makePayment(final Payload json){
@@ -79,29 +79,5 @@ public class FlutterwavePaymentService implements PaymentService {
         return response.getBody();
     }
 
-
-   public static void main(String[] args) {
-    Customer customer = new Customer();
-    customer.setEmail("oindubuisi@gmail.com");
-    customer.setName("Ifeayi osuji");
-    customer.setPhonenumber("08037355772");
-
-    Customization customization = new Customization();
-    customization.setTitle(" new payment");
-    customization.setLogo("null");
-
-     Payload json = new Payload();
-        json.setAmount("100");
-        json.setCurrency("NGN");
-        json.setCustomer(customer);
-        json.setCustomization(customization);
-
-        FlutterwavePaymentService flutterwavePaymentService = new FlutterwavePaymentService(new RestTemplate());
-        PaymentResponse response = flutterwavePaymentService.makePayment(json);
-        System.out.println(response.toString());
-   }
-    
-
-    
     
 }

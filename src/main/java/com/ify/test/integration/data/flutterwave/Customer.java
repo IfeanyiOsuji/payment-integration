@@ -1,4 +1,4 @@
-package com.ify.test.integration.data;
+package com.ify.test.integration.data.flutterwave;
 
 import jakarta.persistence.Entity;
 import lombok.Data;

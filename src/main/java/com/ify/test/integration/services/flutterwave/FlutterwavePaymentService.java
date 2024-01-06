@@ -1,4 +1,4 @@
-package com.ify.test.integration.services;
+package com.ify.test.integration.services.flutterwave;
 
 import java.util.Map;
 import java.util.UUID;
@@ -16,10 +16,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 
-import com.ify.test.integration.data.Customer;
-import com.ify.test.integration.data.Customization;
-import com.ify.test.integration.data.Payload;
-import com.ify.test.integration.dto.PaymentResponse;
+import com.ify.test.integration.data.flutterwave.Customer;
+import com.ify.test.integration.data.flutterwave.Customization;
+import com.ify.test.integration.data.flutterwave.Payload;
+import com.ify.test.integration.dto.flutterwave.PaymentResponse;
 
 @Service
 public class FlutterwavePaymentService implements PaymentService {
@@ -27,13 +27,13 @@ public class FlutterwavePaymentService implements PaymentService {
     @Value("${flutterwave.public-key}")
     private String publicKey;
     @Value("${flutterwave.secret-key}")
-    private String privateKey;// = "FLWSECK_TEST-7c565cc3b057f3eb4e2680038d9adb55-X";
+    private String privateKey;
 
     //@Autowired
     private final RestTemplate restTemplate;
      
         @Value("${flutterwave.apiurl}")
-        String aprurl;// = "https://api.flutterwave.com/v3";
+        String aprurl;
 
     public FlutterwavePaymentService(){
         this.restTemplate  = new RestTemplate();
@@ -45,7 +45,8 @@ public class FlutterwavePaymentService implements PaymentService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "Bearer "+privateKey);
-        System.out.println(headers.get("Authorization"));
+        //System.out.println(headers.get("Authorization"));
+        //System.out.println(json.getTx_ref());
 
         HttpEntity<Payload>httpEntity = new HttpEntity<>(json, headers);
         ResponseEntity<PaymentResponse> response = restTemplate.postForEntity(url, httpEntity, PaymentResponse.class);
@@ -53,19 +54,21 @@ public class FlutterwavePaymentService implements PaymentService {
         return response.getBody();
     }
 
+   
+
 
     private void addRaveDetailsToPayload(Payload payload) {
-        String txRef = UUID.randomUUID().toString();
+        String txRef = UUID.randomUUID().toString().substring(0, 20);
         payload.setPublic_key(publicKey);
         payload.setTx_ref(txRef);
-        payload.setRedirect_url("/callback");
+        payload.setRedirect_url("/payment-callback");
     }
 
 
     
     public Map<String, Object> verifyTransaction(String transactionId) {
        
-           String url = "https://api.flutterwave.com/v3/transactions/" + transactionId + "/verify";
+           String url = aprurl+"/transactions/" + transactionId + "/verify";
         RestTemplate rest = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();

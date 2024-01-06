@@ -1,4 +1,4 @@
-package com.ify.test.integration.dto;
+package com.ify.test.integration.dto.flutterwave;
 
 import java.util.HashMap;
 import java.util.Map;

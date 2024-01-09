@@ -38,7 +38,7 @@ public class ApiService {
         headers.setContentType(MediaType.APPLICATION_JSON);
           headers.set("Authorization", "Bearer "+token);
         HttpEntity<R> requestEntity = new HttpEntity<>(requestBody, headers);
-
+        System.out.println(headers.toString());
         return restTemplate.exchange(
                 url,
                 HttpMethod.POST,

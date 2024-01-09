@@ -1,4 +1,4 @@
-package com.ify.test.integration.dto.paystack;
+package com.ify.test.integration.dto.paystack.customer;
 
 import lombok.Data;
 

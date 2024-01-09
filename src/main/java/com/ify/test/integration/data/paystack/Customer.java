@@ -2,13 +2,18 @@ package com.ify.test.integration.data.paystack;
 
 import java.util.UUID;
 
-import jakarta.persistence.Entity;
+//import javax.persistence.*;
+
+import jakarta.persistence.*;
 import lombok.Data;
 
+
+//@Entity
+//@Table(name = "customer")
 @Data
-@Entity
 public class Customer {
-    private String id = UUID.randomUUID().toString().substring(0, 20);
+    //@Id
+    private String id;
     private long payStackId;
     private String firstName;
     private String lastName;
@@ -18,5 +23,8 @@ public class Customer {
     private String riskAction;
     private String createdAt;
     private String updatedAt;
+    public Customer(){
+        this.id = UUID.randomUUID().toString().substring(0, 20);
+    }
     
 }

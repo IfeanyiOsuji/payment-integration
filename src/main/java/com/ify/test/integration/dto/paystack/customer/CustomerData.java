@@ -1,23 +1,11 @@
-package com.ify.test.integration.dto.paystack;
-
+package com.ify.test.integration.dto.paystack.customer;
 
 import java.util.List;
 
 import lombok.Data;
 
 @Data
-public class CustomerResponseData {
-
-    private boolean status;
-    private String message;
-    private CustomerData data;
-    
-    
-
-}
-@Data
-class CustomerData {
-
+public class CustomerData {
     private String email;
     private int integration;
     private String domain;
@@ -28,4 +16,5 @@ class CustomerData {
     private String createdAt;
     private String updatedAt;
 
+    
 }
